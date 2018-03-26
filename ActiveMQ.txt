@@ -1,0 +1,33 @@
+ActiveMQ
+@1.Introduction to Apache ActiveMQ
+  Enterprise messaging software has been in existence since the late 1980s. Not only is messaging a style of communication between 
+  applications, it’s also a style of integration. Therefore, messaging fulfills the need for both notification as well as 
+  interoperation among applications. But open source solutions have only emerged in the last 10 years. Apache ActiveMQ is one such
+  solution, providing the ability for applications to communicate in an asynchronous, loosely coupled manner.
+  ActiveMQ is an open source, Java Message Service (JMS) 1.1–compliant, message-oriented middleware (MOM) from the Apache 
+  Software Foundation that provides high availability, performance, scalability, reliability, and security for enterprise msging.
+
+  The goal of ActiveMQ is to provide standards-based, message-oriented application integration across as many languages and 
+  platforms as possible. ActiveMQ implements the JMS spec and offers dozens of additional features and value on top of this spec.
+
+  1.1 ActiveMQ features
+     JMS compliance
+     Connectivity (HTTP/S, IP multicast, SSL, STOMP, TCP, UDP, XMPP...)
+     Pluggable persistence and security
+     Building messaging applications with Java
+     Integration with application servers (Tomcat, Jetty, Apache Geronimo, and JBoss)
+     Client APIs (Java, including C/C++, .NET, Perl, PHP, Python, Ruby...)
+     Broker clustering (network of brokers)
+     Dramatically simplified administration
+  1.2 Using ActiveMQ: why and when?
+    Back around 2003, a group of open source developers got together to form Apache Geronimo. 
+    In doing so, they discovered that there was no good message broker available that utilized a BSD-style license. 
+    Geronimo needed a JMS implementation for reasons of Java EE compatibility.
+    ActiveMQ was meant to be used as the JMS spec intended, for remote communications between distributed applications. 
+    To better understand what this means, the best thing to do is look at a few of the ideas behind distributed application 
+    design, specifically communications.
+    1.2.1 Loose coupling and ActiveMQ
+    1.2.2 When to use ActiveMQ
+  1.3 Getting started with ActiveMQ  
+  1.4 Running your first examples with ActiveMQ
+  

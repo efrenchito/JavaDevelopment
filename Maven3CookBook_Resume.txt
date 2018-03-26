@@ -1,0 +1,369 @@
+https://maven.apache.org/guides/getting-started/index.html#
+
+@Overview
+    1.Basics of Apache Maven
+      #1.1-Setting up Apache Maven on Windows
+      Got JDK? C:\>java -version
+      Download &  extract mvn_archive to <mvn_directory> -> 'C:\Apache\apache-maven-3.3.9'
+      Set Path to '<mvn_directory>/bin' and 'M2_HOME' to '<mvn_directory>'
+      C:\>echo %M2_HOME% -> <mvn_directory>
+      #1.2-Verifying the Apache Maven Installation
+      C:\>mvn -version
+      #1.3-Create a New Project
+      C:\>Z:
+      Z:\>cd Z:\Apache\maven\testmvn
+      .:\>mvn archetype:generate
+      Choose a number or apply a filter: 122    (mvn-archetype-quickstar)
+      Define value for property 'groupId': org.mvnskills.demo
+      Define value for property 'artifactId': samplemvn
+      Define value for property 'version': 1.0.SNAPSHOT: :
+      Define value for property 'package': org.mvnskills.demo: :
+      #1.4-Compiling and testing a project
+      .:\>cd testmvn
+      .:\>mvn compile
+      .:\>mvn test
+      #1.5-Understanding the Project Object Model (POM)
+        //pom.xml
+          <project … >
+		    <modelVersion>4.0.0</modelVersion>
+  
+		    <!-- The Basics: project co-ordinates, dependency management, and inheritance details. -->
+		    <!--             Aditionally, it also contains modules and project level properties -->
+		    <groupId>...</groupId>
+		    <artifactId>...</artifactId>
+		    <version>...</version>
+		    <packaging>...</packaging>
+		    <dependencies>...</dependencies>
+		    <parent>...</parent>
+		    <dependencyManagement>...</dependencyManagement>
+		    <modules>...</modules>
+		    <properties>...</properties>
+  
+		    <!-- Build Settings: Build details -->
+		    <build>...</build>
+		    <reporting>...</reporting>
+  
+		    <!-- Project Meta Data: project-specific details such as name, organization, 
+		    <!--                    developers, URL, inception year, and so on. -->
+		    <name>...</name>
+		    <description>...</description>
+		    <url>...</url>
+		    <inceptionYear>...</inceptionYear>
+		    <licenses>...</licenses>
+		    <organization>...</organization>
+		    <developers>...</developers>
+		    <contributors>...</contributors>
+  
+		    <!-- Environment: all information regarding the environment including details of the version control being, 
+		    <!--              issue management, continuous integration, mailing lists, repositories, and so on. -->
+		    <issueManagement>...</issueManagement>
+		    <ciManagement>...</ciManagement>
+		    <mailingLists>...</mailingLists>
+		    <scm>...</scm>
+		    <prerequisites>...</prerequisites>
+		    <repositories>...</repositories>
+		    <pluginRepositories>...</pluginRepositories>
+		    <distributionManagement>...</distributionManagement>
+		    <profiles>...</profiles>
+		  </project>
+		Project co-ordinates
+		  Project co-ordinates are the minimal basic fields that a POM definition must contain
+		  groupId | artifactId | version
+		  co-ordinates -> These three fields mark a specific location within the repository.
+		Sections of the POM
+		    -> The basics:
+		     This section contains project co-ordinates, dependency management, and inheritance details. 
+		     Additionally, it also contains modules and project level properties.
+		    -> Build settings:
+		     This section contains the build details.
+		     ...
+		    -> Project metadata:
+		      This section contains project-specific details
+		      ...
+		    -> Environment:
+		     This section contains all information regarding the environment
+		     ...
+      #1.6-Understanding the build lifecycle
+        There are three inbuilt build lifecycles: default, clean, and site.
+		Default lifecycle
+		  The default lifecycle handles the project compilation, test, and deployment. 
+		    Most important phases:
+			  - Validate: validates that all project information is available and is correct
+			  - Compile: compiles the source code
+			  - Test: runs unit tests within a suitable framework
+			  - Package: packages the compiled code in its distribution format
+			  - Integration-test: processes the package in the integration-test environment
+			  - Verify: runs checks to verify that the package is valid
+			  - Install: installs the package in the local repository
+			  - Deploy: installs the final package in a remote repository
+			All phases:
+			  * Validate
+			  - Initialize
+			  - <sources>        -> generate-sources   | process-sources
+			  - <resources>      -> generate-resources | process-resources
+			  * Compile
+			  - process-classes
+			  - <test-sources>   -> generate-test-sources   | process-test-sources
+			  - <test-resources> -> generate-test-resources | process-test-resources
+			  - test-compile
+			  - process-test-classes
+			  * Test
+			  - prepare-package
+			  * Package
+			  - <integration-test> -> pre-integration-test | integration-test | post-integration-test
+			  * Verify
+			  * Install
+			  * Deploy
+		Clean lifecycle
+		  The clean lifecycle handles the project cleaning and contains the following build phases:
+		  - Pre-clean: executes processes required before project cleaning
+		  - Clean: removes all files generated by previous builds
+		  - Post-clean: executes processes required to finalize project cleaning
+		Site lifecycle
+		  The site lifecycle handles the generation and deployment of the project’s site documentation:
+	      - Pre-site: executes processes required before generation of the site
+	      - Site: generates the project’s site documentation
+		  - Post-site: executes processes required to finalize the site generation and prepares the site for deployment
+	      - Site-deploy: deploys the site documentation to the specified web server
+      #1.7-Understanding build profiles
+        Build profiles are specifications made in the POM and can be triggered as and when required.
+	    Some ways to trigger profiles are:
+	        -> Explicit command-line trigger
+	            mvn install -P profile-1,profile-2   -> Profiles to activate
+  			    mvn install -P !profile-1,!profile-2 -> Profiles that should NOT be activated
+		    -> Maven settings trigger
+			  //settings.xml
+			    ...
+			    <activeProfiles>
+			    <activeProfile>profile-1</activeProfile>
+			    <activeProfile>profile-2</activeProfile>
+			    </activeProfiles>
+			    ...
+		    -> Environment specific trigger
+		      //pom.xml
+		        <profiles>
+				  <profile>
+				    <activation>
+				      <property>
+				        <name>environment</name>
+				        <value>dev</value>
+				      </property>
+				    </activation>
+				  </profile>
+			    </profiles>
+
+@1.BASICS OF APACHE MAVEN
+  01_01-Setting up Apache Maven on Windows
+	Got JDK? 
+	  As mentioned, a prerequisite for working with Maven is the availability of the Java
+	  Development Kit. Make sure that the JDK is available before proceeding. This can
+	  be verified by running the following command line:
+	  
+		C:\>java -version
+	Download & Extract Maven Archive
+	  Next you need to get your hands on Maven. You can download it from:
+	  http://maven.apache.org/download.html
+	  After downloading Maven, extract the archive into any folder. For Windows, it is advised that
+	  the path doesn’t contain any white-space characters. I extracted Maven in the D drive.
+	  
+		'C:\Apache\apache-maven-3.3.9'
+		
+	  -> To start using Maven, we need to configure Windows environment variables.
+		 The PATH variable needs to be modified to include the Maven binaries folder.
+	  -> Set M2_HOME to 'C:\Apache\apache-maven-3.3.9'
+	     C:\>echo %M2_HOME%
+	  *****
+	  Apache Maven is now ready and available for use in the command line. It is also available for
+	  integration with IDEs and other development tools, but more on that in upcoming chapters.
+  01_02-Verifying the Apache Maven Installation
+      You have installed Maven on your system, or so you think? Before you start using it,
+	  the setup and availability of Maven needs to be verified. This is done by executing
+	  the following command line:
+	
+	    C:\>mvn -version
+  01_03-Creating a new Project
+	    mvn archetype:generate		
+	  If this is the first time you are running this command, you will see that downloads are taking place in the command line.
+	  Then you will see a rather large list of archetypes, each having a number, a name, and a short description explaining what they are.
+	  -> Select the default archetype. Here we have considered that it is archetype number 101 named maven-archetype-quickstart
+	     You will be asked to select a version of the archetype.
+	     Next, you will have to enter the Maven "project co-ordinates" such as groupId, artifactId, version, and package.
+	       groupId: GroupId co-ordinates are used to specify the hierarchical location of a project within a Maven repository.
+		   artifactId: The artifactId is an identifier for your project
+		   version: version here refers to the project version.
+		   package: Packages refer to the reverse dns root package name that is commonly used in Java and a host of other programming languages.
+  01_04-Compiling and testing a Project
+    Compiling and testing a project
+	  - Start your command-line terminal window
+	  - Navigate to the project folder that contains the pom.xml file
+      - Run the following command:
+
+		mvn compile
+
+	  Now Apache Maven begins to download dependencies, if they aren’t available in your local
+      repository, and then proceeds to compile the project.
+	  *****
+	  If the terminal shows BUILD SUCCESS, it means Maven has finished compilation and build of the application	  
+	Test Driven Development (TDD) 
+	  It's a popular practice that is advocated for and followed religiously by some of the very best software craftsmen in the 
+	  industry. Maven, having recognized this, makes testing part of the default build lifecycle. This makes TDD easier for teams 
+	  who are trying to implement it in their development process.
+	  When the default conventions are being used in a Maven project, they have the src/test directory that contains all the 
+	  tests for the code. Run the following command to run the tests:
+		
+		mvn test
+	
+	  This command triggers Maven to run the tests present in the .../src/test folder. 
+	  When this is completed, you’ll see a brief report echoed on the terminal.
+  01_05-Understanding the Project Object Model
+    Every Apache Maven project contains a pom.xml file. 
+	The pom.xml file is the XML representation of the project and thus contains all metadata pertaining to the project.
+    This includes project configuration, defect tracking system details, project organization and licenses, project paths, dependencies, and so on.
+	
+	Structure of a POM
+    The structure of a typical Apache Maven Project POM file is described as follows:
+		<project … >
+		  <modelVersion>4.0.0</modelVersion>
+
+		  <!-- The Basics -->
+		  <groupId>...</groupId>
+		  <artifactId>...</artifactId>
+		  <version>...</version>
+		  <packaging>...</packaging>
+		  <dependencies>...</dependencies>
+		  <parent>...</parent>
+		  <dependencyManagement>...</dependencyManagement>
+		  <modules>...</modules>
+		  <properties>...</properties>
+
+		  <!-- Build Settings -->
+		  <build>...</build>
+		  <reporting>...</reporting>
+
+		  <!-- Project Meta Data -->
+		  <name>...</name>
+		  <description>...</description>
+		  <url>...</url>
+		  <inceptionYear>...</inceptionYear>
+		  <licenses>...</licenses>
+		  <organization>...</organization>
+		  <developers>...</developers>
+		  <contributors>...</contributors>
+
+		  <!-- Environment -->
+		  <issueManagement>...</issueManagement>
+		  <ciManagement>...</ciManagement>
+		  <mailingLists>...</mailingLists>
+		  <scm>...</scm>
+		  <prerequisites>...</prerequisites>
+		  <repositories>...</repositories>
+		  <pluginRepositories>...</pluginRepositories>
+		  <distributionManagement>...</distributionManagement>
+		  <profiles>...</profiles>
+		</project>
+	
+	Project co-ordinates
+	  Project co-ordinates are the minimal basic fields that a POM definition must contain. The three
+	  co-ordinate fields are groupId, artifactId, and version.
+	  These three fields mark a specific location within the repository, hence the term co-ordinates.
+	
+	The previously displayed sample POM contains four major sections. They are explained as follows:
+	 - The basics: This section contains project co-ordinates, dependency management, and inheritance details. 
+	   Additionally, it also contains modules and project level properties.
+     - Build settings: This section contains the build details.
+     - Project metadata: This section contains project-specific details such as name,
+	   organization, developers, URL, inception year, and so on.
+     - Environment: This section contains all information regarding the environment
+	   including details of the version control being, issue management, continuous
+       integration, mailing lists, repositories, and so on.
+
+  Understanding the build lifecycle
+    The build lifecycle explicitly defines the process of building, testing, distributing an artifact,
+    and is at the heart of every Maven project.
+    There are three inbuilt build lifecycles: default, clean, and site.
+
+	Default lifecycle
+	  The default lifecycle handles the project compilation, test, and deployment. While it contains
+	  over 20 build phases, the following are the most important phases:
+	  - Validate: validates that all project information is available and is correct
+	  - Compile: compiles the source code
+	  - Test: runs unit tests within a suitable framework
+	  - Package: packages the compiled code in its distribution format
+	  - Integration-test: processes the package in the integration-test environment
+	  - Verify: runs checks to verify that the package is valid
+	  - Install: installs the package in the local repository
+	  - Deploy: installs the final package in a remote repository
+	  
+	Clean lifecycle
+	  The clean lifecycle handles the project cleaning and contains the following build phases:
+	  - Pre-clean: executes processes required before project cleaning
+	  - Clean: removes all files generated by previous builds
+	  - Post-clean: executes processes required to finalize project cleaning
+	
+	Site lifecycle
+	  The site lifecycle handles the generation and deployment of the project’s site documentation:
+      - Pre-site: executes processes required before generation of the site
+      - Site: generates the project’s site documentation
+	  - Post-site: executes processes required to finalize the site generation and prepares the site for deployment
+      - Site-deploy: deploys the site documentation to the specified web server
+	  
+  01_06-Understanding build profiles
+    Projects in Maven are generally portable. This is done by allowing configuration within the
+	POM, avoiding all filesystem references, and depending extensively on the local repository
+	to store the required metadata.
+	
+	However, this isn’t always possible as under some circumstances configuration with
+	filesystem references become unavoidable. For these cases, Maven introduces the
+	concept of build profiles.
+	
+	Build profiles are specifications made in the POM and can be triggered as and when required.
+	Some ways to trigger profiles are:
+	+ Explicit command-line trigger
+	  Profiles can be directly triggered through the command line using the -P option. The list of
+	  profiles, separated by commas, that are to be activated should be mentioned after the -P flag:
+	  
+	    mvn install -P profile-1,profile-2
+		
+	  In this case, only the profiles explicitly mentioned in the command will be activated and all
+	  other profiles stay dormant for this build.
+	  
+	  The reverse is possible as well. You can explicitly specify which profiles should not be activated
+	  through the command line:
+	  
+		mvn install -P !profile-1,!profile-2
+		
+	+ Maven settings trigger
+	  Maven settings can also directly activate profiles if they are specified in the
+	  
+		<activeProfiles> section of the settings file.
+		<settings>
+		...
+		<activeProfiles>
+		<activeProfile>profile-1</activeProfile>
+		<activeProfile>profile-2</activeProfile>
+		</activeProfiles>
+		...
+		</settings>
+		
+	  Profiles listed in the Maven settings get activated by default every time and they don’t need
+	  any explicit specification in the command line.
+	  
+	+ Environment specific trigger
+	  Profiles can also be triggered based on the current build environment. The environment in
+	  which the profile is to be activated is directly defined within the POM profile declarations.
+		<profiles>
+		<profile>
+		<activation>
+		<property>
+		<name>environment</name>
+		<value>dev</value>
+		</property>
+		</activation>
+		</profile>
+		</profiles>
+	  
+	  In the code just written, the profile is only activated in the dev build environment. A template
+	  of a typical Apache Maven command, wherein the environment is specified explicitly in the
+	  command, is given as follows:
+	  
+		mvn groupId:artifactId:goal -Denvironment=dev

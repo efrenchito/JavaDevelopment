@@ -1,0 +1,209 @@
+https://git-scm.com/book/en/v2
+
+1.Getting Started
+    1.1 About Version Control
+      What is “version control”, and why should you care? Version control is a system that records changes to a file or set of 
+      files over time so that you can recall specific versions later.
+        -> Local Version Control Systems
+      Many people’s version-control method of choice is to copy files into another directory (perhaps a time-stamped directory, 
+      if they’re clever). This approach is very common because it is so simple, but it is also incredibly error prone. It is easy 
+      to forget which directory you’re in and accidentally write to the wrong file or copy over files you don’t mean to.
+      => One of the more popular VCS tools was a system called RCS, which is still distributed with many computers today. 
+        -> Centralized Version Control Systems
+      The next major issue that people encounter is that they need to collaborate with developers on other systems. To deal with 
+      this problem, Centralized Version Control Systems (CVCSs) were developed. These systems, such as CVS, Subversion, and 
+      Perforce, have a single server that contains all the versioned files, and a number of clients that check out files from that 
+      central place. However, this setup also has some serious downsides. The most obvious is the single point of failure that the centralized server represents
+        -> Distributed Version Control Systems
+      In a DVCS (such as Git, Mercurial, Bazaar or Darcs), clients don’t just check out the latest snapshot of the files; rather, 
+      they fully mirror the repository, including its full history. Thus, if any server dies, and these systems were collaborating 
+      via that server, any of the client repositories can be copied back up to the server to restore it.
+    1.2 A Short History of Git
+      In 2002, the Linux kernel project began using a proprietary DVCS called BitKeeper.
+      In 2005, the relationship between the community that developed the Linux kernel and the commercial company that developed 
+      BitKeeper broke down, and the tool’s free-of-charge status was revoked. This prompted the Linux development community (and in 
+      particular Linus Torvalds, the creator of Linux) to develop their own tool based 
+      Some of the goals of the new system were as follows:
+	   .Speed
+	   .Simple design
+	   .Strong support for non-linear development (thousands of parallel branches)
+	   .Fully distributed
+	   .Able to handle large projects like the Linux kernel efficiently (speed and data size)
+      Since its birth in 2005, Git has evolved and matured to be easy to use and yet retain these initial qualities.
+    1.3 Git Basics
+        .Snapshots, Not Differences
+          The major difference between Git and any other VCS is the way Git thinks about its data.
+            -> file-based changes
+             Conceptually, most other systems store information as a list of file-based changes. These other systems (CVS, 
+             Subversion, Perforce, Bazaar, and so on) think of the information they store as a set of files and the changes made 
+             to each file over time (delta-based version control).
+            -> snapshots
+             Git doesn’t think of or store its data this way. Instead, Git thinks of its data more like a series of snapshots of a 
+             miniature filesystem. With Git, every time you commit, or save the state of your project, Git basically takes a 
+             picture   of what all your files look like at that moment and stores a reference to that snapshot. 
+             Git doesn’t store the file again, just a link to the previous identical file it has already stored.
+        .Nearly Every Operation Is Local
+         Most operations in Git need only local files and resources to operate. Because you have the entire history of the project 
+         right there on your local disk, most operations seem almost instantaneous.
+         For example, to browse the history of the project, Git doesn’t need to go out to the server to get the history and 
+         display it for you. This also means that there is very little you can’t do if you’re offline or off VPN
+        .Git Has Integrity
+    		 Everything in Git is check-summed before it is stored and is then referred to by that checksum. 
+    		 This means it’s impossible to change the contents of any file or directory without Git knowing about it.
+    		.Git Generally Only Adds Data
+    		 When you do actions in Git, nearly all of them only add data to the Git database. It is hard to get the system to do 
+    		 anything that is not undoable or to make it erase data in any way. As with any VCS, you can lose or mess up changes you 
+    		 haven’t committed yet, but after you commit a snapshot into Git, it is very difficult to lose, especially if you 
+    		 regularly push your database to another repository.
+    		.The Three States
+    		 Git has three main states that your files can reside in: committed, modified, and staged:
+    		  -Committed means that the data is safely stored in your local database.
+    		  -Modified means that you have changed the file but have not committed it to your database yet.
+    		  -Staged means that you have marked a modified file in its current version to go into your next commit snapshot.
+
+    		 This leads us to the three main sections of a Git project: the Git directory, the working tree, and the staging area:
+    		  -The Git directory is where Git stores the metadata and object database for your project. This is the most important 
+    		   part of Git, and it is what is copied when you clone a repository from another computer.
+    		  -The working tree is a single checkout of one version of the project. These files are pulled out of the compressed 
+    		   database in the Git directory and placed on disk for you to use or modify.
+    		  -The staging area is a file, generally contained in your Git directory, that stores information about what will go into 
+    		   your next commit. Its technical name in Git parlance is the “index”, but the phrase “staging area” works just as well.  
+    		.The basic Git workflow goes something like this:
+    		 1.You modify files in your working tree.
+    		 2.You selectively stage just those changes you want to be part of your next commit, which adds only those 
+    		  changes to the staging area.
+    		 3. You do a commit, which takes the files as they are in the staging area and stores that snapshot permanently to your 
+    		  Git directory. If a particular version of a file is in the Git directory, it’s considered committed. If it has been 
+          modified and was added to the staging area, it is staged. And if it was changed since it was checked out but has not 
+          been staged, it is modified. In Git Basics, you’ll learn more about these states and how you can either take advantage 
+          of them or skip the staged part entirely.
+    1.4 The Command Line
+      There are a lot of different ways to use Git. There are the original command-line tools, and there are many graphical user 
+      interfaces of varying capabilities. For this book, we will be using Git on the command line. For one, the command line is 
+      the only place you can run all Git commands – most of the GUIs implement only a partial subset of Git functionality for 
+      simplicity. If you know how to run the command-line version, you can probably also figure out how to run the GUI version, 
+      while the opposite is not necessarily true. 
+    1.5 Installing Git
+    1.6 First-Time Git Setup
+	    Git comes with a tool called git config that lets you get and set configuration variables that control all aspects of how 
+	    Git looks and operates. These variables can be stored in three different places:
+	    1. /etc/gitconfig file: --system
+	    2. ~/.gitconfig or ~/.config/git/config file: --global
+	    3. Each level overrides values in the previous level, so values in .git/config trump those in /etc/gitconfig.
+         On Windows system: C:\ProgramData\Git\config this config file can only be changed by git config -f <file> as an admin.
+      -> Your Identity
+        $ git config --global user.name "efrenchito"
+		    $ git config --global user.email efrenchito@gmail.com
+	    -> Your Editor
+	      $ git config --global core.editor "'C:/Program Files/Notepad++/notepad++.exe' -multiInst -nosession"
+	    -> Checking Your Settings
+  	    $ git config --list
+	      You can also check what Git thinks a specific key’s value is by typing git config <key>:
+	      $ git config user.name 
+        John Doe  
+    1.7 Getting Help
+      If you ever need help while using Git, there are two equivalent ways to get the comprehensive manual page (manpage) help for any of the Git commands:
+	   $ git help <verb>
+	   $ man git-<verb>
+	   -> $ git config -h
+	   -> $ git add -h
+2. Git Basics
+	2.1 Getting a Git Repository
+	2.2 Recording Changes to the Repository
+	2.3 Viewing the Commit History
+	2.4 Undoing Things
+	2.5 Working with Remotes
+	2.6 Tagging
+	2.7 Git Aliases
+	2.8 Summary
+3. Git Branching
+	3.1 Branches in a Nutshell
+	3.2 Basic Branching and Merging
+	3.3 Branch Management
+	3.4 Branching Workflows
+	3.5 Remote Branches
+	3.6 Rebasing
+	3.7 Summary
+4. Git on the Server
+	4.1 The Protocols
+	4.2 Getting Git on a Server
+	4.3 Generating Your SSH Public Key
+	4.4 Setting Up the Server
+	4.5 Git Daemon
+	4.6 Smart HTTP
+	4.7 GitWeb
+	4.8 GitLab
+	4.9 Third Party Hosted Options
+	4.10 Summary
+5. Distributed Git
+	5.1 Distributed Workflows
+	5.2 Contributing to a Project
+	5.3 Maintaining a Project
+	5.4 Summary
+
+
+
+
+@How to Install and Configure Git (GitHub) on Windows -> https://www.youtube.com/watch?v=J_Clau1bYco
+    GitHub
+      Create a New Repository: 
+        Owner: efrenchito
+        Repository Name: TestGit
+        Description: This repository is for test GIT purpose only
+        [x] Public
+        [x] Initialize this repository with a README
+        -> Create repository
+        => Clone or Download: https://github.com/efrenchito/TestGit.git
+    Windows Create Git directory: C:\git
+    Git (version;config;add;status;commit;push)
+        -> CHECK VERSION
+         $ git --version
+         git version 2.16.2.windows.1
+        -> SET CONFIG VALUES 
+         $ git config --global user.name "efrenchito"
+         $ git config --global user.email efrenchito@gmail.com
+         $ git config --list
+        -> CLONE REPOSITORY 
+         $ cd /c/git
+         $ git clone https://github.com/efrenchito/TestGit.git
+         $ ls
+         TestGit/
+         $ cd TestGit/
+        Windows -> Create new File "C:\git\testGit.txt"
+        -> ADD STATUS COMMIT PUSH
+         $ git add Test.txt
+         $ git status 
+         $ git commit -m "first commit" testGit.txt
+         $ git push -u orignin master
+         ...Windows -> Modify File "C:\git\testGit.txt"
+         $ git status
+         $ git commit -m "second commit" testGit.txt
+         $ git push -u origin master
+@How to Install and Configure Git (GitLab) on Eclipse -> https://www.youtube.com/watch?v=IIvELCKD7f0
+    GitLab
+      Create a GitLab Project 'eclipse-project'
+      Add Readme.md
+      Create new Branch 'development'
+    Eclipse
+      Help>Install New Software
+        Work with: http://download.eclipse.org/egit/updates
+        Select All
+        -> Next/Next/Finish
+    Windows>Perspective>Customize Perspective
+      Action Set Availability -> [check]Git  'Activar las funciones de Git'
+      Tool Bar Visibility     -> [check]Git  'Activar el menu en la barra de Eclipse'
+    Show Git Repositories    
+      Window>Show View> 'Git Repositories'
+      Open Perspective -> 'Git'
+    Windows>Preferences>Team>Git>Configuration  
+      -> username.email: efrenchito@gmail.com
+      -> username.name:  efrenchito
+    Clone Repository
+      Git Repositories>Clone a Git Repository
+        Location.URI: https://gitlab.com/efrenchito/eclipse-project.git
+        Authentication.user: efrenchito | Authentication.password: *******
+        [check]Store in Secure Store.
+        Clone Git Repository>Branch Selection [check]development
+@Git Tutorial 4 Eclipse
+    -> https://www.youtube.com/watch?v=1XNVWpjPoio
+    -> https://www.youtube.com/watch?v=lANfUhlyoSs

@@ -1,0 +1,67 @@
+@Mastering JIRA  -> Gain expertise in tracking project issues and managing them efficiently using JIRA
+
+1. Planning Your JIRA Installation
+	Overview
+	  Atlassian JIRA is a proprietary issue tracking system. It is used to track bugs, resolve issues, and manage project functions. 
+	  There are many such tools available in the market, but the best thing about JIRA is that it can be easily configured and it 
+	  offers a wide range of customizations. Out of the box, JIRA offers defect/bug tracking functionalities, but it can also be 
+	  customized to act like a helpdesk system, a simple test management suite, or a project management system with end-to-end 
+	  traceability.
+    Planning the installation
+      From the very beginning, start preparing the documents to store all the following information:
+      • Number of users:
+        ° Are users part of a single team or several teams?
+        ° If users are part of several teams working with different groups, then is there a need to limit the visibility of 
+          projects within these groups?
+      • Number of projects: There is no limit on the number of projects.
+      • JIRA server hardware recommendation:
+        ° For approximately 50 projects and 100 users,less than 5000 issues—16 GB RAM and a multicore CPU
+        ° For approximately 100 projects and 3000 users, less than 100,000 issues—32 GB RAM,
+      • Will you need mail notifications in JIRA -> JIRA has the capability to send e-mails to users on various
+		events, such as issue creating, updating, and resolving. In order to send
+		e-mails, an SMTP server is required. JIRA can also be configured with Google Apps for Work;
+	  • Authentication: JIRA has its own internal directory user management system where the information 
+	    of a user is stored in an internal database.
+	  • Can JIRA be used from multiple locations?:
+	  • How many concurrent users will access the system?:
+	  • Tentatively, how many issues per project can be stored?:
+	  • Tentatively, how many total issues can be stored?:
+	  • Will users also upload attachments in their projects?:
+	  • How many custom fields do you intend to create?:
+	  • Choice of platform and database:
+	  • Integration with other tools:
+	Installing JIRA on Windows
+	  Download the JIRA Windows Installer (.exe) file from https://www.atlassian.com/software/jira/download
+	  ...
+	System requirements
+	  Procedure to install the JDK
+	    Download JDK 7 from http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html
+	    Uninstall any earlier version of Java that was installed on your system.
+	    Restart your system.
+	    Set the JAVA_HOME windows environment variable.
+	    Restart your system.
+	  Setting up the MySQL database
+	    1. C:\> mysql -u root - p
+	    2. Enter password: ****** 
+	    3. Create database jiradb character set utf8; -> (jiradb/jirauser:password)
+	     -> https://confluence.atlassian.com/adminjiraserver/connecting-jira-applications-to-mysql-938846854.html
+	     GRANT SELECT,INSERT, UPDATE,DELETE,DROP,CREATE,ALTER,INDEX on jiradb.* TO 'jirauser'@'localhost' IDENTIFIED BY 'password';
+	     SHOW GRANTS FOR jirauser@localhost;
+
+	  The JIRA setup wizard: ->  HTTP Port Number: 8282|Control Port Number: 8205
+         copy mysql.driver to C:\Program Files\Atlassian\JIRA\lib
+    JIRA Directory structure, startup/ shutdown scripts, and log files
+      The JIRA Installation Directory -> C:\Program Files\Atlassian\JIRA  
+      The startup and shutdown scripts are available in the bin directory under the JIRA installation directory:
+       • Startup script: bin/start-jira.bat or bin/start-jira.sh
+	   • Shutdown script: bin/stop-jira.bat or bin/stop-jira.sh
+	  The JIRA Home Directory -> C:\Program Files\Atlassian\Application Data\JIRA
+	JIRA key
+	  B2PR-YHKL-QKPX-GOH6
+
+	  AAABjg0ODAoPeNp9kk9PwkAQxe/9FJt40cM2FBHFpInYrlJpC7ZoNPGy1gHWwLaZ3aJ8e/sHAkol6WXSefN+82ZP7lCQgCOxuqRlXXc6xUccd0LaLevKmCGAnKdZBmj6IgGpgH0ILVJps3DConHkxcwI8+U74Gj6pACVTS3DSaXmiQ75EmyYIshkLnR6M1tysTCTdGl8CuTmgWycYzLnClyuwS79aeucWl1j4zxZZ1CNdEZBwCLH6/vbX+w7E7je03WodbHFYEFh28wRA64APde+bY8j+joY+vRxOH6h96NBt4bMMP3IE22WBVXpVH9xBLOYKlZga8zhWFsBxB2QGrBujfN3laDIqgB34v+Tbci/KYViwcJEcpn8k8QRxoMrbHyKUHzPjVlIfcs6v2xd9Hr1mIOlWGg3tDW7xZpjqZzyhQJjhDMuheLV2n0nYIaDUFV/n8CihnouGMve9q9kKpgMhdpcxIVdyg9e1Cfxxp6clvCkpj97uyZsxRd5ZVhDH9z1SOj7BPu63cy6/gGu1iryMCwCFFPcRVeDG0Mm+RJc8EMexoGbgGfjAhR25XrdmO+fbAMkz+bTOAYG01ZBAQ==X02jb
+
+
+	    
+
+
